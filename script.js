@@ -157,17 +157,17 @@ function renderStudyLinks() {
 }
 
 function renderMobileLanguage() {
+  document.body.dataset.mobileLanguage = state.mobileLanguage;
   languageToggleButtons.forEach((button) => {
     button.classList.toggle("is-active", button.dataset.language === state.mobileLanguage);
   });
-  chinesePanel.classList.toggle("is-mobile-hidden", state.mobileLanguage !== "cn");
-  englishPanel.classList.toggle("is-mobile-hidden", state.mobileLanguage !== "en");
 }
 
 function scrollToReaderOnMobile() {
-  if (!window.matchMedia("(max-width: 820px)").matches) return;
+  if (!window.matchMedia("(max-width: 900px)").matches) return;
   const panel = state.mobileLanguage === "cn" ? chinesePanel : englishPanel;
   panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  setTimeout(() => panel.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
 }
 
 function renderBookList() {
@@ -285,6 +285,7 @@ languageToggleButtons.forEach((button) => {
   button.addEventListener("click", () => {
     state.mobileLanguage = button.dataset.language;
     renderMobileLanguage();
+    scrollToReaderOnMobile();
   });
 });
 
