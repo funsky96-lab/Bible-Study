@@ -73,7 +73,8 @@ const state = {
   bookId: "gen",
   chapter: 1,
   filter: "all",
-  search: ""
+  search: "",
+  mobileLanguage: "cn"
 };
 
 const bookList = document.querySelector("#bookList");
@@ -87,9 +88,14 @@ const cnVerses = document.querySelector("#cnVerses");
 const enVerses = document.querySelector("#enVerses");
 const prevChapterButton = document.querySelector("#prevChapter");
 const nextChapterButton = document.querySelector("#nextChapter");
+const mobilePrevChapterButton = document.querySelector("#mobilePrevChapter");
+const mobileNextChapterButton = document.querySelector("#mobileNextChapter");
 const googleSearchLink = document.querySelector("#googleSearchLink");
 const modernTime = document.querySelector("#modernTime");
 const christianTime = document.querySelector("#christianTime");
+const languageToggleButtons = document.querySelectorAll(".language-toggle");
+const chinesePanel = document.querySelector(".scripture-panel--cn");
+const englishPanel = document.querySelector(".scripture-panel--en");
 
 function getSelectedBook() {
   return books.find((book) => book.id === state.bookId) || books[0];
@@ -133,10 +139,14 @@ function renderChapterNavigation() {
   const previousBook = previous ? books[getBookIndex(previous.bookId)] : null;
   const nextBook = next ? books[getBookIndex(next.bookId)] : null;
 
-  prevChapterButton.disabled = !previous;
-  nextChapterButton.disabled = !next;
-  prevChapterButton.textContent = previousBook ? `上一章 ${previousBook.cn} ${previous.chapter}` : "上一章";
-  nextChapterButton.textContent = nextBook ? `下一章 ${nextBook.cn} ${next.chapter}` : "下一章";
+  [prevChapterButton, mobilePrevChapterButton].forEach((button) => {
+    button.disabled = !previous;
+    button.textContent = previousBook ? `上一章 ${previousBook.cn} ${previous.chapter}` : "上一章";
+  });
+  [nextChapterButton, mobileNextChapterButton].forEach((button) => {
+    button.disabled = !next;
+    button.textContent = nextBook ? `下一章 ${nextBook.cn} ${next.chapter}` : "下一章";
+  });
 }
 
 function renderStudyLinks() {
@@ -145,6 +155,21 @@ function renderStudyLinks() {
   googleSearchLink.href = `https://www.google.com/search?q=${query}`;
   googleSearchLink.textContent = "Google";
 }
+
+function renderMobileLanguage() {
+  languageToggleButtons.forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.language === state.mobileLanguage);
+  });
+  chinesePanel.classList.toggle("is-mobile-hidden", state.mobileLanguage !== "cn");
+  englishPanel.classList.toggle("is-mobile-hidden", state.mobileLanguage !== "en");
+}
+
+function scrollToReaderOnMobile() {
+  if (!window.matchMedia("(max-width: 820px)").matches) return;
+  const panel = state.mobileLanguage === "cn" ? chinesePanel : englishPanel;
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function renderBookList() {
   const query = state.search.trim().toLowerCase();
   const visibleBooks = books.filter((book) => {
@@ -173,6 +198,7 @@ function renderBookList() {
       state.bookId = book.id;
       state.chapter = 1;
       renderAll();
+      scrollToReaderOnMobile();
     });
     bookList.append(button);
   });
@@ -224,6 +250,7 @@ function renderReader() {
   renderChapterSelects();
   renderChapterNavigation();
   renderStudyLinks();
+  renderMobileLanguage();
   renderVerses(cnVerses, chapterText?.cn, "cn");
   renderVerses(enVerses, chapterText?.en, "en");
 }
@@ -252,6 +279,14 @@ chapterSelectCn.addEventListener("change", (event) => syncChapter(event.target.v
 chapterSelectEn.addEventListener("change", (event) => syncChapter(event.target.value));
 prevChapterButton.addEventListener("click", () => goToChapter(getAdjacentChapter("previous")));
 nextChapterButton.addEventListener("click", () => goToChapter(getAdjacentChapter("next")));
+mobilePrevChapterButton.addEventListener("click", () => goToChapter(getAdjacentChapter("previous")));
+mobileNextChapterButton.addEventListener("click", () => goToChapter(getAdjacentChapter("next")));
+languageToggleButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    state.mobileLanguage = button.dataset.language;
+    renderMobileLanguage();
+  });
+});
 
 function renderTime() {
   const now = new Date();

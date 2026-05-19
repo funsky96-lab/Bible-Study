@@ -46,6 +46,11 @@
         <nav id="bookList" class="book-list"></nav>
       </aside>
 
+      <div class="mobile-language-switch" aria-label="手机经文语言选择">
+        <button class="language-toggle is-active" type="button" data-language="cn">中文</button>
+        <button class="language-toggle" type="button" data-language="en">English</button>
+      </div>
+
       <section class="scripture-panel scripture-panel--cn" aria-label="中文圣经">
         <div class="panel-heading">
           <div>
@@ -71,6 +76,11 @@
         </div>
         <article id="enVerses" class="verses verses--en"></article>
       </section>
+
+      <div class="chapter-nav chapter-nav--mobile" aria-label="手机章节导航">
+        <button id="mobilePrevChapter" class="chapter-nav__button" type="button">上一章</button>
+        <button id="mobileNextChapter" class="chapter-nav__button chapter-nav__button--primary" type="button">下一章</button>
+      </div>
     </main>
 
     <section class="study-links" aria-label="解经与搜索参考">
@@ -91,9 +101,10 @@
     </footer>
 
     <script src="./data/bible-data.js?v=full-20260519"></script>
-    <script src="./script.js?v=full-20260519"></script>
+    <script src="./script.js?v=mobile-20260519"></script>
   </body>
 </html>
+
 
 
 
