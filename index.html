@@ -1,0 +1,99 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bible Study | 中英文圣经阅读</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__shade"></div>
+      <div class="hero__content">
+        <p class="eyebrow">Chinese / English Bible</p>
+        <h1>中英文圣经阅读</h1>
+        <p>旧约与新约目录，章节切换，中英文逐节对照。</p>
+        <div class="time-strip" aria-label="时间显示">
+          <div class="time-card">
+            <span>现代时间</span>
+            <strong id="modernTime">--</strong>
+          </div>
+          <div class="time-card">
+            <span>基督纪年</span>
+            <strong id="christianTime">--</strong>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="reader-shell">
+      <aside class="catalog" aria-label="圣经目录">
+        <div class="catalog__top">
+          <div>
+            <span class="section-kicker">目录</span>
+            <h2>圣经书卷</h2>
+          </div>
+          <select id="testamentFilter" aria-label="选择约卷">
+            <option value="all">全部</option>
+            <option value="old">旧约</option>
+            <option value="new">新约</option>
+          </select>
+        </div>
+        <label class="search-box">
+          <span>搜索书卷</span>
+          <input id="bookSearch" type="search" placeholder="如：约翰 / John" />
+        </label>
+        <nav id="bookList" class="book-list"></nav>
+      </aside>
+
+      <section class="scripture-panel scripture-panel--cn" aria-label="中文圣经">
+        <div class="panel-heading">
+          <div>
+            <span class="section-kicker">Chinese</span>
+            <h2 id="cnTitle">中文</h2>
+          </div>
+          <select id="chapterSelectCn" aria-label="选择中文章节"></select>
+        </div>
+        <article id="cnVerses" class="verses"></article>
+        <div class="chapter-nav" aria-label="章节导航">
+          <button id="prevChapter" class="chapter-nav__button" type="button">上一章</button>
+          <button id="nextChapter" class="chapter-nav__button chapter-nav__button--primary" type="button">下一章</button>
+        </div>
+      </section>
+
+      <section class="scripture-panel scripture-panel--en" aria-label="English Bible">
+        <div class="panel-heading">
+          <div>
+            <span class="section-kicker">English</span>
+            <h2 id="enTitle">English</h2>
+          </div>
+          <select id="chapterSelectEn" aria-label="Select English chapter"></select>
+        </div>
+        <article id="enVerses" class="verses verses--en"></article>
+      </section>
+    </main>
+
+    <section class="study-links" aria-label="解经与搜索参考">
+      <div>
+        <span class="section-kicker">Study Links</span>
+        <h2>解经与搜索参考</h2>
+      </div>
+      <div class="study-links__grid">
+        <a id="googleSearchLink" href="https://www.google.com/search?q=Bible%20commentary" target="_blank" rel="noopener noreferrer">Google</a>
+        <a href="https://www.ccbiblestudy.net/index-S.htm" target="_blank" rel="noopener noreferrer">华人基督徒查经资料</a>
+        <a href="https://www.odbm.org/sc" target="_blank" rel="noopener noreferrer">灵命日粮</a>
+        <a href="https://www.cac-singapore.org.sg/zh/" target="_blank" rel="noopener noreferrer">新加坡华人年议会</a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>Copyright notice: 本页面仅供个人阅读、学习、研究与非商业交流使用。当前经文数据采用 Public Domain 的中文和合本简体与 King James Version；外部解经与灵修内容版权归各自权利人所有。请在正式发布、转载、下载或批量使用前确认对应资料来源的授权条款。</p>
+    </footer>
+
+    <script src="./data/bible-data.js?v=full-20260519"></script>
+    <script src="./script.js?v=full-20260519"></script>
+  </body>
+</html>
+
+
+
